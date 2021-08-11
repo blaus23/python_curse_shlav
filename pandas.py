@@ -35,6 +35,12 @@ df = pd.read_csv('Automobile_data.csv')
 print(df.sort_values(by='price', ascending=False))
 
 #9 - yuval
+GermanCars = {'Company': ['Ford', 'Mercedes', 'BMV', 'Audi'], 'Price': [23845, 171995, 135925 , 71400]}
+japaneseCars = {'Company': ['Toyota', 'Honda', 'Nissan', 'Mitsubishi '], 'Price': [29995, 23600, 61500 , 58900]}
+GermanCars = pd.DataFrame.from_dict(GermanCars)
+japaneseCars = pd.DataFrame.from_dict(japaneseCars)
+df_row = pd.concat([GermanCars, japaneseCars])
+print(df_row)
 
 #10 - ofir
 import pandas as pd
