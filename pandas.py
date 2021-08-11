@@ -6,11 +6,17 @@ df = pd.read_csv("Automobile_data.csv")
 print(df.head(5))
 print(df.tail(5))
 
+#2 - adi
+
 
 #3 - noy
 high_val = df.sort_values(by="price", ascending=False)
 high_val = high_val[["company", "price"]]
 print("Highest price:\n", high_val.head(1))
+
+#4 - noam
+
+#5 = maya
 
 #6 - ofir
 import pandas as pd
@@ -27,6 +33,8 @@ print(df.groupby(['company'])['average-mileage'].agg(lambda x: x.unique().sum()/
 import pandas as pd
 df = pd.read_csv('Automobile_data.csv')
 print(df.sort_values(by='price', ascending=False))
+
+#9 - yuval
 
 #10 - ofir
 import pandas as pd
