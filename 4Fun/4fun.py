@@ -70,7 +70,12 @@ def id_for_new_post():
     )
     return last_indx_doc["last_index"]
 
+# Custom 404 page
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
+   
 @app.route("/")
 def index():
     """
