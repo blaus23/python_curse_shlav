@@ -16,6 +16,9 @@ high_val = high_val[["company", "price"]]
 print("Highest price:\n", high_val.head(1))
 
 #4 - noam
+df = pd.read_csv(r"C:\Users\User\PycharmProjects\adi\Automobile_data.csv")
+toy = df["company"].isin(["toyota"])
+print(df[toy])
 
 #5 = maya
 df = pd.read_csv(r'C:/Users/User/Automobile_data.csv')
