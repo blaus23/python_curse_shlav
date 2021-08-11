@@ -26,7 +26,6 @@ count = df['company'].value_counts()
 print(count)
 
 #6 - ofir
-import pandas as pd
 df = pd.read_csv('Automobile_data.csv')
 df2 = df.groupby('company').max('price')
 df2['company'] = df2.index
