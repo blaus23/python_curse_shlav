@@ -112,44 +112,5 @@ def reply(post_id):
 def img(img_path):
     return send_from_directory(str(upload_folder.absolute()), img_path)
 
-
-
-def parse_content(lines):
-    """
-    >>> parse_content(["> greentext", ">>1", "plaintext"])
-    [{'line_content': '> greentext', 'type': 'greentext', 'reference_post_id': 0},
-     {'line_content': '>>1', 'type': 'reference', 'reference_post_id': '1'},
-     {'line_content': 'plaintext', 'type': 'plain', 'reference_post_id': 0}]
-    """
-    parsed_lines = []
-    for line in lines:
-        line_content = line
-        text_type = "plain"
-        reference_post_id = None
-
-        if line[0] == ">":
-            if check_reference(line[1:]):
-                text_type = "reference"
-                reference_post_id = line[2:]
-            else:
-                text_type = "greentext"
-
-        # insert paresd line
-        parsed_lines.append(
-            {
-                "line_content": line_content,
-                "type": text_type,
-                "reference_post_id": reference_post_id,
-            }
-        )
-    return parsed_lines
-
-
-def check_reference(line):
-    if line[0] == ">":
-        if (line[1:]).isdigit() or (line[1] == " " and (line[2:]).isdigit()):
-            return True
-    return False
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
