@@ -1,5 +1,6 @@
-#1 - noy
 import pandas as pd
+
+#1 - noy
 read_file = pd.read_excel ("Automobile_data.xlsx", sheet_name='in')
 read_file.to_csv ("Automobile_data.csv", index = None, header=True)
 df = pd.read_csv("Automobile_data.csv")
