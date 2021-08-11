@@ -1,4 +1,12 @@
 """
+4fun.py
+
+Names: Ofir, Yuval, Noy, Adi, Noam, Amit, Maya
+Date: 11.08.2021
+ 
+This programs creates a website using flask module, people can upload questions
+and others can reply. The questions are inserted into a database.
+
 Example post representation in the database:
 
 {
@@ -43,7 +51,7 @@ if not upload_folder.exists():
         print(f"Please create {upload_folder}")
         exit(1)
 
-
+# Create connection to local mongodb database
 mongoclient = MongoClient()
 db = mongoclient["4fun"]
 posts = db["posts"]
@@ -65,6 +73,9 @@ def id_for_new_post():
 
 @app.route("/")
 def index():
+    """
+    This function returns the home page
+    """
     all_posts = list(posts.find({}))
     posts_by_id = {p["id"]: p for p in all_posts}
     threads = parents_and_children(all_posts)
@@ -76,13 +87,15 @@ def index():
 
 @app.route("/new-post", methods=["POST"])
 def new_post(**overrides):
+    """
+    This function creates new post and inserts into the database.
+    """
     base_post = {
         "title": req.form.get("title", None),
         "content": req.form["content"],
         "tags": [],
         "upvotes": 0,
         "downvotes": 0,
-        "reports": 0,
         "parent": None,
         "id": id_for_new_post(),
         "image": None,
@@ -92,18 +105,23 @@ def new_post(**overrides):
     if req.form.get("tags"):
         base_post["tags"] = req.form["tags"].split(",")
 
+    # If the user uploads an image, it will be saved on the server
     uploaded_img = req.files.get("image", None)
     if uploaded_img:
         filename = secure_filename(uploaded_img.filename)
         uploaded_img.save(upload_folder / filename)
         base_post["image"] = filename
 
+    # Insert to db
     posts.insert_one({**base_post, **overrides})
     return redirect("/")
 
 
 @app.route("/reply/<int:post_id>", methods=["GET", "POST"])
 def reply(post_id):
+    """
+    Once you select reply, this function sends you to reply.html
+    """
     # reply input page, not submitting yet
     if req.method == "GET":
         post = posts.find_one({"id": post_id})
@@ -115,6 +133,9 @@ def reply(post_id):
 
 @app.route("/img/<img_path>")
 def img(img_path):
+    """
+    This function downloads an image to the client's endpoint
+    """
     try:
         return send_from_directory(str(upload_folder.absolute()), img_path)
     except:
