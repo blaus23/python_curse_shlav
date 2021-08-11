@@ -17,6 +17,9 @@ print("Highest price:\n", high_val.head(1))
 #4 - noam
 
 #5 = maya
+df = pd.read_csv(r'C:/Users/User/Automobile_data.csv')
+count = df['company'].value_counts()
+print(count)
 
 #6 - ofir
 import pandas as pd
