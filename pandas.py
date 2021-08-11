@@ -37,7 +37,6 @@ df = pd.read_csv('Automobile_data.csv')
 print(df.groupby(['company'])['average-mileage'].agg(lambda x: x.unique().sum()/x.nunique()))
 
 #8 - ofir
-import pandas as pd
 df = pd.read_csv('Automobile_data.csv')
 print(df.sort_values(by='price', ascending=False))
 
@@ -50,7 +49,6 @@ df_row = pd.concat([GermanCars, japaneseCars])
 print(df_row)
 
 #10 - ofir
-import pandas as pd
 Car_Price = {'Company': ['Toyota', 'Honda', 'BMW', 'Audi'],
              'Price': [23845, 17995, 135925, 71400]}
 Car_Horsepower = {'Company': ['Toyota', 'Honda', 'BMW', 'Audi'],
