@@ -17,15 +17,17 @@ Example post representation in the database:
   "date": ISODate("2021-08-03T15:14:27.817Z"),
 }
 """
-
-from flask import Flask, render_template, redirect, send_from_directory
-from flask import request as req
-from flask.helpers import url_for
-from pymongo import MongoClient
-from datetime import datetime
-from werkzeug.utils import secure_filename
-from pathlib import Path
-from Pac.pac import parents_and_children
+try:
+  from flask import Flask, render_template, redirect, send_from_directory
+  from flask import request as req
+  from flask.helpers import url_for
+  from pymongo import MongoClient
+  from datetime import datetime
+  from werkzeug.utils import secure_filename
+  from pathlib import Path
+  from Pac.pac import parents_and_children
+except ImportError:
+  print("Please 'pip install' the specified module from the PyPi Server!")
 
 
 app = Flask(__name__)
