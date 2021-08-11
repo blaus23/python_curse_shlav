@@ -32,6 +32,7 @@ from pymongo import MongoClient
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from pathlib import Path
+from Cr.cr import check_reference
 
 
 app = Flask(__name__)
@@ -187,11 +188,6 @@ def parse_content(lines):
     return parsed_lines
 
 
-def check_reference(line):
-    if line[0] == ">":
-        if (line[1:]).isdigit() or (line[1] == " " and (line[2:]).isdigit()):
-            return True
-    return False
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
