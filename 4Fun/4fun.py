@@ -18,16 +18,16 @@ Example post representation in the database:
 }
 """
 try:
-  from flask import Flask, render_template, redirect, send_from_directory
-  from flask import request as req
-  from flask.helpers import url_for
-  from pymongo import MongoClient
-  from datetime import datetime
-  from werkzeug.utils import secure_filename
-  from pathlib import Path
-  from Pac.pac import parents_and_children
+    from flask import Flask, render_template, redirect, send_from_directory
+    from flask import request as req
+    from flask.helpers import url_for
+    from pymongo import MongoClient
+    from datetime import datetime
+    from werkzeug.utils import secure_filename
+    from pathlib import Path
+    from Pac.pac import parents_and_children
 except ImportError:
-  print("Please 'pip install' the specified module from the PyPi Server!")
+    print("Please 'pip install' the specified module from the PyPi Server!")
 
 
 app = Flask(__name__)
@@ -69,9 +69,9 @@ def index():
     posts_by_id = {p["id"]: p for p in all_posts}
     threads = parents_and_children(all_posts)
     try:
-      return render_template("index.html", threads=threads, posts_by_id=posts_by_id)
+        return render_template("index.html", threads=threads, posts_by_id=posts_by_id)
     except:
-      print("Cannot render the index.html file, please check your templates folder for the index.html file!")
+        print("Cannot render the index.html file, please check your templates folder for the index.html file!")
 
 
 @app.route("/new-post", methods=["POST"])
@@ -115,7 +115,10 @@ def reply(post_id):
 
 @app.route("/img/<img_path>")
 def img(img_path):
-    return send_from_directory(str(upload_folder.absolute()), img_path)
+    try:
+        return send_from_directory(str(upload_folder.absolute()), img_path)
+    except:
+        print("cannot download the image!")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
