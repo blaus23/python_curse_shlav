@@ -25,7 +25,7 @@ from pymongo import MongoClient
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from pathlib import Path
-from cr import check_reference
+from cr import *
 
 
 app = Flask(__name__)
@@ -151,7 +151,7 @@ def parse_content(lines):
         reference_post_id = None
 
         if line[0] == ">":
-            if check_reference(line[1:]):
+            if cr.check_reference(line[1:]):
                 text_type = "reference"
                 reference_post_id = line[2:]
             else:
