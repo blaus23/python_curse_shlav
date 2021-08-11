@@ -75,6 +75,11 @@ def id_for_new_post():
 def page_not_found(e):
     return render_template('404.html'), 404
 
+# Custom 500 page
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('500.html'), 500
+
    
 @app.route("/")
 def index():
