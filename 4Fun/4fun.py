@@ -68,7 +68,10 @@ def index():
     all_posts = list(posts.find({}))
     posts_by_id = {p["id"]: p for p in all_posts}
     threads = parents_and_children(all_posts)
-    return render_template("index.html", threads=threads, posts_by_id=posts_by_id)
+    try:
+      return render_template("index.html", threads=threads, posts_by_id=posts_by_id)
+    except:
+      print("Cannot render the index.html file, please check your templates folder for the index.html file!")
 
 
 @app.route("/new-post", methods=["POST"])
