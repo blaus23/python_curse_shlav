@@ -8,10 +8,9 @@ print(df.head(5))
 print(df.tail(5))
 
 #2 - Adi
-if _name_ == '_main_':
-    kk = pd.read_csv(r"C:\Users\טל המלך\PycharmProjects\panda\d.csv", na_values="?")
-    kk.to_csv(r"C:\Users\טל המלך\PycharmProjects\panda\.csv")
-    print(kk)
+kk = pd.read_csv(r"C:\Users\טל המלך\PycharmProjects\panda\d.csv", na_values="?")
+kk.to_csv(r"C:\Users\טל המלך\PycharmProjects\panda\d1.csv")
+print(kk)
 
 #3 - Noy
 high_val = df.sort_values(by="price", ascending=False)
