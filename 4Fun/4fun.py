@@ -116,3 +116,7 @@ def img(img_path):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
+    
+# run with https
+# mkdir ssl && openssl req -x509 -newkey rsa:4096 -nodes -out ssl/cert.pem -keyout ssl/key.pem -days 365 -subj "/C=US/ST=New York/L=New York/O=General Org/OU=Ou/CN=example.com"
+# app.run(host='0.0.0.0', port='443', ssl_context=('ssl/cert.pem', 'ssl/key.pem'))
