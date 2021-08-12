@@ -36,19 +36,19 @@
             <!-- tags -->
             <!-- <span class="badge badge-pill badge-dark post-tag">××ž×ª</span> -->
             <form action="/like_or_dislike/{{ post['id'] }}/{{ 'likes' }}" method="post" style="display:inline;">
-	    <button type="submit" name="like_button" data-toggle="tooltip" data-placement="top" title="××”×‘×ª×™">
-		    <strong>ðŸ‘</strong>
+	    <button type="submit" name="like_button" data-toggle="tooltip" data-placement="top" title="אהבתי">
+		    <strong>👍</strong>
 	    </button>
 	    </form>
 	    <form action="/like_or_dislike/{{ post['id'] }}/{{ 'dislikes' }}" method="post" style="display:inline;">
-            <button type="submit" name="dislike_button" data-toggle="tooltip" data-placement="top" title="×œ× ××”×‘×ª×™">
-	        <strong>ðŸ‘Ž</strong>
+            <button type="submit" name="dislike_button" data-toggle="tooltip" data-placement="top" title="לא אהבתי">
+	        <strong>👎</strong>
 	    </button>
 	    </form>
             {% if not is_reply %}
-            <button data-toggle="tooltip" data-placement="top" title="×ª×’×•×‘×”">
+            <button data-toggle="tooltip" data-placement="top" title="תגובה">
 		<a href="/reply/{{ post['id'] }}" style="text-decoration: none">
-		    <strong>ðŸ’¬</strong>
+		    <strong>💬</strong>
                 </a>
             </button>
             {% endif %}
