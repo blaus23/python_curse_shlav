@@ -18,7 +18,6 @@ Example post representation in the database:
   ],
   "upvotes": 0,
   "downvotes": 0,
-  "reports": 0,
   "id": 123245123124,
   "parent": 85718975819651, // null if the post is a thread
   "image": null,
