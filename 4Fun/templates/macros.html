@@ -14,51 +14,52 @@
      {{ post["content"] }}
      </div>
 -->
-<div >
+<div>
     {% if is_reply %}
     <div></div>
     {% endif %}
     {% if is_reply %}
     <div>
-    {% else %}
-    <div>
-    {% endif %}
+        {% else %}
         <div>
-            {% if is_reply %}
-            <strong>תגובה ל{{ parent_title }}</strong>
-            {% else %}
-            <strong>{{ post["title"] }}</strong>
             {% endif %}
-
-            {% for tag in post["tags"] %}
-                <span>{{ tag }}</span>
-            {% endfor %}
-            <!-- tags -->
-            <!-- <span class="badge badge-pill badge-dark post-tag">אמת</span> -->
-            <button data-toggle="tooltip" data-placement="top" title="אהבתי"><strong>👍</strong></button>
-            <button data-toggle="tooltip" data-placement="top" title="לא אהבתי"><strong>👎</strong></button>
-            {% if not is_reply %}
-            <button data-toggle="tooltip"
-                    data-placement="top" title="תגובה">
-                <a href="/reply/{{ post['id'] }}" style="text-decoration: none">
-                    <strong>💬</strong>
-                </a>
-            </button>
-            {% endif %}
-            <div>ID: {{ post["id"] }}</div>
             <div>
-                {{ post["date"].strftime("%H:%M %d/%m/%y") }}
-            </div>
-        </div>
-        <div>
-            <p>{{ post["content"] }}</p>
-        </div>
+                {% if is_reply %}
+                <strong>תגובה ל{{ parent_title }}</strong>
+                {% else %}
+                <strong>{{ post["title"] }}</strong>
+                {% endif %}
 
-        {% if post["image"] %}
-        <a href="/img/{{ post['image'] }}">
-            <img src="/img/{{ post['image'] }}"/>
-        </a>
-        {% endif %}
+                {% for tag in post["tags"] %}
+                <span>{{ tag }}</span>
+                {% endfor %}
+                <!-- tags -->
+                <!-- <span class="badge badge-pill badge-dark post-tag">אמת</span> -->
+                <button data-toggle="tooltip" data-placement="top" title="אהבתי"
+                    onclick={{post["like_count"]++}}><strong>👍</strong></button>
+                <button data-toggle="tooltip" data-placement="top" title="לא אהבתי" onclick={{post["like_count"]--}}><strong>👎</strong></button>
+                <div>{{post["like_count"]}}</div>
+                {% if not is_reply %}
+                <button data-toggle="tooltip" data-placement="top" title="תגובה">
+                    <a href="/reply/{{ post['id'] }}" style="text-decoration: none">
+                        <strong>💬</strong>
+                    </a>
+                </button>
+                {% endif %}
+                <div>ID: {{ post["id"] }}</div>
+                <div>
+                    {{ post["date"].strftime("%H:%M %d/%m/%y") }}
+                </div>
+            </div>
+            <div>
+                <p>{{ post["content"] }}</p>
+            </div>
+
+            {% if post["image"] %}
+            <a href="/img/{{ post['image'] }}">
+                <img src="/img/{{ post['image'] }}" />
+            </a>
+            {% endif %}
+        </div>
     </div>
-</div>
-{%- endmacro %}
+    {%- endmacro %}
