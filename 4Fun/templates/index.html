@@ -8,13 +8,23 @@
 	<link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
 	<link href="http://fonts.googleapis.com/earlyaccess/alefhebrew.css" rel="stylesheet">
         <meta charset="utf-8">
+	<link href="http://fonts.googleapis.com/earlyaccess/alefhebrew.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        <style>
+        body {
+        	font-family: "Merienda", "Alef Hebrew", Arial, sans-serif;
+		font-size: 17px;
+        }
+        </style>
     </head>
     <body>
 	<img src="../static/images/logo.png" alt="Smiley face" style="float:left;width:30%;height:30%;">
         <div>
             <div id="add-form">
                 <form action="/new-post" method="post" enctype="multipart/form-data">
-                    <div>
+                    <div><center>
                         <br>
                         <input style="width:20%" placeholder="כותרת" name="title" required><br>
                         <textarea style="width:20%" name="content" placeholder="תוכן" rows="3" required></textarea><br>
