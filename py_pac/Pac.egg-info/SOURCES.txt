@@ -1,8 +1,0 @@
-README.md
-setup.py
-Pac/__init__.py
-Pac/pac.py
-Pac.egg-info/PKG-INFO
-Pac.egg-info/SOURCES.txt
-Pac.egg-info/dependency_links.txt
-Pac.egg-info/top_level.txt
