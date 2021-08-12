@@ -2,20 +2,31 @@
 {% from 'macros.html' import render_post %}
 <html lang="he">
     <head>
-        <title>תגובה ל{{ title }}</title>
+        <title>×ª×’×•×‘×” ×œ{{ title }}</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+	<link href="http://fonts.googleapis.com/earlyaccess/alefhebrew.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <style>
+        body {
+                font-family: "Merienda", "Alef Hebrew", Arial, sans-serif;
+                font-size: 17px;
+        }
+        </style>
     </head>
     <body dir="rtl">
         <div>
-            <div id="add-form">
+            <div id="add-form"><center>
                 <form action="/reply/{{ post['id'] }}" method="post" enctype="multipart/form-data">
                     <div>
-                        <h1>תגובה ל: {{ title }}</h1>
-                        <textarea placeholder="תוכן" rows="3"
-                                  required name="content"></textarea><br>
-                        <input type="file" name="image"  ><br>
-                        <input type="hidden" name="parent" value="{{ post['id'] }}"><br>
-                        <button type="submit" id="send-button">שגר   </button><br>
-                    </div>
+                        <h1>×ª×’×•×‘×” ×œ: {{ title }}</h1>
+                        <textarea placeholder="×ª×•×›×Ÿ" rows="3"
+                                  required name="content"></textarea><br><br><br>
+                        <input type="file" name="image"  ><br><br>
+                        <input type="hidden" name="parent" value="{{ post['id'] }}"><br><br>
+                        <button type="submit" id="send-button">×©×’×¨   </button><br>
+                    </center></div>
                 </form>
                 <br>
             </div>
