@@ -48,7 +48,7 @@ upload_folder = Path(app.config["UPLOAD_FOLDER"])
 if not upload_folder.exists():
     try:
         upload_folder.mkdir(exist_ok=True)
-    except PermissionError:
+    except PermissionError or FileNotFoundError:
         print(f"Please create {upload_folder}")
         exit(1)
 
