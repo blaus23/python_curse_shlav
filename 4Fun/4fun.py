@@ -2,15 +2,12 @@
 
 """
 4fun.py
-
 Names: Ofir, Yuval, Noy, Adi, Noam, Amit, Maya
 Date: 11.08.2021
  
 This programs creates a website using flask module, people can upload questions
 and others can reply. The questions are inserted into a database.
-
 Example post representation in the database:
-
 {
   "title": "Based Post",
   "content": "allo",
@@ -18,8 +15,8 @@ Example post representation in the database:
     "based",
     "entrepreneur"
   ],
-  "upvotes": 0,
-  "downvotes": 0,
+  "likes": 0,
+  "dislikes": 0,
   "id": 123245123124,
   "parent": 85718975819651, // null if the post is a thread
   "image": null,
@@ -99,8 +96,8 @@ def new_post(**overrides):
         "title": req.form.get("title", None),
         "content": req.form["content"],
         "tags": [],
-        "upvotes": 0,
-        "downvotes": 0,
+        "likes": 0,
+        "dislikes": 0,
         "parent": None,
         "id": id_for_new_post(),
         "image": None,
