@@ -21,7 +21,7 @@ Example post representation in the database:
   "id": 123245123124,
   "parent": 85718975819651, // null if the post is a thread
   "image": null,
-  "date": ISODate("2021-08-03T15:14:27.817Z"),
+  "date": ISODate("2021-08-11T15:14:27.817Z"),
 }
 """
 try:
