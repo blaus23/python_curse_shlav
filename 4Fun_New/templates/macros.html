@@ -25,13 +25,12 @@
     <div>
     {% endif %}
         <div>
-            <br>
             {% if is_reply %}
             <strong>Comment to {{ parent_title }}</strong><br>
             {% else %}
             <strong>{{ post["title"] }}</strong>
             {% endif %}
-	    <br>
+	        <br>
 
             {% for tag in post["tags"] %}
                 <span style="border:solid #ADD8E6; padding: 1px;">{{ tag }}</span>
