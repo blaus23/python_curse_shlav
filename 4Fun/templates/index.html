@@ -3,19 +3,29 @@
     <head>
         <title>4fun</title>
         <meta charset="utf-8">
+	<link href="http://fonts.googleapis.com/earlyaccess/alefhebrew.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <style>
+        body {
+        	font-family: "Merienda", "Alef Hebrew", Arial, sans-serif;
+		font-size: 17px;
+        }
+        </style>
     </head>
     <body>
         <div>
             <div id="add-form">
                 <form action="/new-post" method="post" enctype="multipart/form-data">
-                    <div>
+                    <div><center>
                         <br>
-                        <input placeholder="כותרת" name="title" required><br>
-                        <textarea name="content" placeholder="תוכן" rows="3" required></textarea><br>
-						<textarea name="tags" rows="2" placeholder="תגיות, מופרדות בפסיק"></textarea><br>
-                        <input type="file" name="image"><br>
-                        <button type="submit" id="send-button">שגר   </button><br>
-                    </div>
+                        <input placeholder="×›×•×ª×¨×ª" name="title" required><br><br><br>
+                        <textarea name="content" placeholder="×ª×•×›×Ÿ" rows="3" required></textarea><br><br><br>
+						<textarea name="tags" rows="2" placeholder="×ª×’×™×•×ª, ×ž×•×¤×¨×“×•×ª ×‘×¤×¡×™×§"></textarea><br><br><br>
+                        <input type="file" name="image"><br><br><br>
+                        <button type="submit" id="send">×©×’×¨</button><br>
+                    </center></div>
                 </form>
             </div>
             <br>
