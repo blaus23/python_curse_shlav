@@ -3,27 +3,18 @@
 <html lang="he">
     <head>
         <title>תגובה ל{{ title }}</title>
-        {% include 'head.html' %}
     </head>
     <body dir="rtl">
-        <div style="background-repeat:repeat-x;
-					background-image:url('{{ url_for("static", filename="images/bar.png") }}');
-			 overflow:hidden;background-color:#c8a2c8;">
-            <a href="index.html" style="float:left;
-					 padding: 4px 16px;
-					 background-color: #c8a2c8;"><img src="{{ url_for('static', filename='images/logo.png') }}" style="width:120px;height:80px;"></a>
-        </div>
-        <br>
-        <div class="container text-right">
-            <div class="card row" id="add-form">
+        <div>
+            <div id="add-form">
                 <form action="/reply/{{ post['id'] }}" method="post" enctype="multipart/form-data">
-                    <div class="form-group p-1">
+                    <div>
                         <h1>תגובה ל: {{ title }}</h1>
-                        <textarea class="text form-control m-2" placeholder="תוכן" rows="3"
-                                  required name="content"></textarea>
-                        <input type="file" name="image" class="form-control m-2 col-6 row" >
-                        <input type="hidden" name="parent" value="{{ post['id'] }}">
-                        <button type="submit" class="btn btn-light float-start" id="send-button">שגר   </button>
+                        <textarea placeholder="תוכן" rows="3"
+                                  required name="content"></textarea><br>
+                        <input type="file" name="image"  ><br>
+                        <input type="hidden" name="parent" value="{{ post['id'] }}"><br>
+                        <button type="submit" id="send-button">שגר   </button><br>
                     </div>
                 </form>
                 <br>

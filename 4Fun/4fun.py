@@ -1,4 +1,12 @@
 """
+4fun.py
+
+Names: Ofir, Yuval, Noy, Adi, Noam, Amit, Maya
+Date: 11.08.2021
+ 
+This programs creates a website using flask module, people can upload questions
+and others can reply. The questions are inserted into a database.
+
 Example post representation in the database:
 
 {
@@ -17,14 +25,17 @@ Example post representation in the database:
   "date": ISODate("2021-08-03T15:14:27.817Z"),
 }
 """
-
-from flask import Flask, render_template, redirect, send_from_directory
-from flask import request as req
-from flask.helpers import url_for
-from pymongo import MongoClient
-from datetime import datetime
-from werkzeug.utils import secure_filename
-from pathlib import Path
+try:
+    from flask import Flask, render_template, redirect, send_from_directory
+    from flask import request as req
+    from flask.helpers import url_for
+    from pymongo import MongoClient
+    from datetime import datetime
+    from werkzeug.utils import secure_filename
+    from pathlib import Path
+    from Pac.pac import parents_and_children
+except ImportError:
+    print("Please 'pip install' the specified module from the PyPi Server!")
 
 
 app = Flask(__name__)
@@ -40,7 +51,7 @@ if not upload_folder.exists():
         print(f"Please create {upload_folder}")
         exit(1)
 
-
+# Create connection to local mongodb database
 mongoclient = MongoClient()
 db = mongoclient["4fun"]
 posts = db["posts"]
@@ -59,24 +70,36 @@ def id_for_new_post():
     )
     return last_indx_doc["last_index"]
 
-
+# Custom 404 page
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+   
 @app.route("/")
 def index():
+    """
+    This function returns the home page
+    """
     all_posts = list(posts.find({}))
     posts_by_id = {p["id"]: p for p in all_posts}
     threads = parents_and_children(all_posts)
-    return render_template("index.html", threads=threads, posts_by_id=posts_by_id)
+    try:
+        return render_template("index.html", threads=threads, posts_by_id=posts_by_id)
+    except:
+        print("Cannot render the index.html file, please check your templates folder for the index.html file!")
 
 
 @app.route("/new-post", methods=["POST"])
 def new_post(**overrides):
+    """
+    This function creates new post and inserts into the database.
+    """
     base_post = {
         "title": req.form.get("title", None),
         "content": req.form["content"],
         "tags": [],
         "upvotes": 0,
         "downvotes": 0,
-        "reports": 0,
         "parent": None,
         "id": id_for_new_post(),
         "image": None,
@@ -86,18 +109,23 @@ def new_post(**overrides):
     if req.form.get("tags"):
         base_post["tags"] = req.form["tags"].split(",")
 
+    # If the user uploads an image, it will be saved on the server
     uploaded_img = req.files.get("image", None)
     if uploaded_img:
         filename = secure_filename(uploaded_img.filename)
         uploaded_img.save(upload_folder / filename)
         base_post["image"] = filename
 
+    # Insert to db
     posts.insert_one({**base_post, **overrides})
     return redirect("/")
 
 
 @app.route("/reply/<int:post_id>", methods=["GET", "POST"])
 def reply(post_id):
+    """
+    Once you select reply, this function sends you to reply.html
+    """
     # reply input page, not submitting yet
     if req.method == "GET":
         post = posts.find_one({"id": post_id})
@@ -109,68 +137,17 @@ def reply(post_id):
 
 @app.route("/img/<img_path>")
 def img(img_path):
-    return send_from_directory(str(upload_folder.absolute()), img_path)
-
-
-def parents_and_children(all_posts):
     """
-    Given a list of raw posts from the DB, return a dictionary where the keys are thread posts and
-    their values are all of the thread replies.
-
-    >>> parents_and_children([
-    ...     {'parent': None, "id": 1}, # thread, because parent=null
-    ...     {'parent': 1, "id": 2},    # reply, because parent references another post
-    ...     {'parent': None, "id": 3},
-    ...     {'parent': 1, "id": 4},
-    ... ])
-    {1: [2, 4], 3: []}
+    This function downloads an image to the client's endpoint
     """
-    result = {}
-    for post in all_posts:
-        if post["parent"] is None:
-            result[post["id"]] = []
-        else:
-            if not result.get(post["parent"], None):
-                result[post["parent"]] = []
-            result[post["parent"]].append(post["id"])
-    return result
-
-
-def parse_content(lines):
-    """
-    >>> parse_content(["> greentext", ">>1", "plaintext"])
-    [{'line_content': '> greentext', 'type': 'greentext', 'reference_post_id': 0},
-     {'line_content': '>>1', 'type': 'reference', 'reference_post_id': '1'},
-     {'line_content': 'plaintext', 'type': 'plain', 'reference_post_id': 0}]
-    """
-    parsed_lines = []
-    for line in lines:
-        line_content = line
-        text_type = "plain"
-        reference_post_id = None
-
-        if line[0] == ">":
-            if check_reference(line[1:]):
-                text_type = "reference"
-                reference_post_id = line[2:]
-            else:
-                text_type = "greentext"
-
-        # insert paresd line
-        parsed_lines.append(
-            {
-                "line_content": line_content,
-                "type": text_type,
-                "reference_post_id": reference_post_id,
-            }
-        )
-    return parsed_lines
-  
-def check_reference(line):
-    if line[0] == ">":
-        if (line[1:]).isdigit() or (line[1] == " " and (line[2:]).isdigit()):
-            return True
-    return False
+    try:
+        return send_from_directory(str(upload_folder.absolute()), img_path)
+    except:
+        print("cannot download the image!")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
+    
+# run with https
+# mkdir ssl && openssl req -x509 -newkey rsa:4096 -nodes -out ssl/cert.pem -keyout ssl/key.pem -days 365 -subj "/C=US/ST=New York/L=New York/O=General Org/OU=Ou/CN=example.com"
+# app.run(host='0.0.0.0', port='443', ssl_context=('ssl/cert.pem', 'ssl/key.pem'))
