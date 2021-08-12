@@ -1,0 +1,36 @@
+<!doctype html>
+{% from 'macros.html' import render_post %}
+<html lang="he">
+    <head>
+        <title>Comment to {{ title }}</title>
+	<link href="http://fonts.googleapis.com/earlyaccess/alefhebrew.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <style>
+        body {
+                font-family: "Merienda", "Alef Hebrew", Arial, sans-serif;
+                font-size: 17px;
+        }
+        </style>
+    </head>
+    <body dir="rtl">
+        <div>
+            <div id="add-form"><center>
+                <form action="/reply/{{ post['id'] }}" method="post" enctype="multipart/form-data">
+                    <div>
+                        <h1>Comment to {{ title }}</h1>
+                        <textarea rows="3"
+                                  required name="content"></textarea><br><br><br>
+                        <input type="file" name="image"  ><br><br>
+                        <input type="hidden" name="parent" value="{{ post['id'] }}"><br><br>
+                        <button type="submit" id="send-button">Send</button><br>
+                    </center></div>
+                </form>
+                <br>
+            </div>
+            <br>
+            {{ render_post(post) }}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+{% from 'macros.html' import render_post %}
+<html dir="rtl">
+    <head>
+        <title>4fun</title>
+        <meta charset="utf-8">
+	<link href="http://fonts.googleapis.com/earlyaccess/alefhebrew.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <style>
+        body {
+        	font-family: "Merienda", "Alef Hebrew", Arial, sans-serif;
+		font-size: 17px;
+		margin: 0;
+        }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div id="add-form">
+                <form action="/new-post" method="post" enctype="multipart/form-data">
+                    <div><center>
+                        <br>
+			<div id="head">4Fun</div>
+			<br>
+                        <input placeholder="Title" name="title" id="text" required><br><br><br>
+                        <textarea name="content" placeholder="Content" rows="3" id="text" required></textarea><br><br><br>
+						<textarea name="tags" rows="3" placeholder="Enter tags, seperated with ," id="text"></textarea><br><br><br>
+                        <input type="file" name="image"><br><br><br>
+                        <button type="submit" id="send">Send</button><br>
+                    </center></div>
+                </form>
+            </div>
+            <br>
+            {% for thread_id in threads %}
+            {{ render_post(posts_by_id[thread_id]) }}
+            {% for child_id in threads[thread_id] %}
+            {{ render_post(posts_by_id[child_id],
+            is_reply=True,
+            parent_title=posts_by_id[thread_id]["title"]) }}
+            {% endfor %}
+			{% endfor %}
+        </div>
+        <div class="bg"></div>
+	<div class="bg bg2"></div>
+	<div class="bg bg3"></div>
+    </body>
+</html>
