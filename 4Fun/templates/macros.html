@@ -14,12 +14,12 @@
      {{ post["content"] }}
      </div>
 -->
-<div >
+<div>
     {% if is_reply %}
     <div></div>
     {% endif %}
     {% if is_reply %}
-    <div>
+    <div style="position:relative;right:50px">
     {% else %}
     <div>
     {% endif %}
@@ -31,17 +31,24 @@
             {% endif %}
 
             {% for tag in post["tags"] %}
-                <span>{{ tag }}</span>
+                <span style="border:solid red;padding:3px;">{{ tag }}</span>
             {% endfor %}
             <!-- tags -->
             <!-- <span class="badge badge-pill badge-dark post-tag">אמת</span> -->
-            <button data-toggle="tooltip" data-placement="top" title="אהבתי"><strong>👍</strong></button>
-            <button data-toggle="tooltip" data-placement="top" title="לא אהבתי"><strong>👎</strong></button>
+            <form action="/like_or_dislike/{{ post['id'] }}/{{ 'likes' }}" method="post" style="display:inline;">
+	    <button type="submit" name="like_button" data-toggle="tooltip" data-placement="top" title="אהבתי">
+		    <strong>👍</strong>
+	    </button>
+	    </form>
+	    <form action="/like_or_dislike/{{ post['id'] }}/{{ 'dislikes' }}" method="post" style="display:inline;">
+            <button type="submit" name="dislike_button" data-toggle="tooltip" data-placement="top" title="לא אהבתי">
+	        <strong>👎</strong>
+	    </button>
+	    </form>
             {% if not is_reply %}
-            <button data-toggle="tooltip"
-                    data-placement="top" title="תגובה">
-                <a href="/reply/{{ post['id'] }}" style="text-decoration: none">
-                    <strong>💬</strong>
+            <button data-toggle="tooltip" data-placement="top" title="תגובה">
+		<a href="/reply/{{ post['id'] }}" style="text-decoration: none">
+		    <strong>💬</strong>
                 </a>
             </button>
             {% endif %}

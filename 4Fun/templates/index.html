@@ -2,17 +2,23 @@
 <html dir="rtl">
     <head>
         <title>4fun</title>
+	<link rel="icon" type="image/png" href="../static/images/logo.png" />
+	<link rel= "stylesheet" type= "text/css" href= "../static/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+	<link href="http://fonts.googleapis.com/earlyaccess/alefhebrew.css" rel="stylesheet">
         <meta charset="utf-8">
     </head>
     <body>
+	<img src="../static/images/logo.png" alt="Smiley face" style="float:left;width:30%;height:30%;">
         <div>
             <div id="add-form">
                 <form action="/new-post" method="post" enctype="multipart/form-data">
                     <div>
                         <br>
-                        <input placeholder="כותרת" name="title" required><br>
-                        <textarea name="content" placeholder="תוכן" rows="3" required></textarea><br>
-						<textarea name="tags" rows="2" placeholder="תגיות, מופרדות בפסיק"></textarea><br>
+                        <input style="width:20%" placeholder="כותרת" name="title" required><br>
+                        <textarea style="width:20%" name="content" placeholder="תוכן" rows="3" required></textarea><br>
+			<textarea style="width:20%" name="tags" rows="2" placeholder="תגיות, מופרדות בפסיק"></textarea><br>
                         <input type="file" name="image"><br>
                         <button type="submit" id="send-button">שגר   </button><br>
                     </div>
@@ -20,13 +26,13 @@
             </div>
             <br>
             {% for thread_id in threads %}
-            {{ render_post(posts_by_id[thread_id]) }}
-            {% for child_id in threads[thread_id] %}
-            {{ render_post(posts_by_id[child_id],
-            is_reply=True,
-            parent_title=posts_by_id[thread_id]["title"]) }}
-            {% endfor %}
-			{% endfor %}
+                {{ render_post(posts_by_id[thread_id]) }}
+                {% for child_id in threads[thread_id] %}
+                    {{ render_post(posts_by_id[child_id],
+                    is_reply=True,
+                    parent_title=posts_by_id[thread_id]["title"]) }}
+                {% endfor %}
+	    {% endfor %}
         </div>
     </body>
 </html>

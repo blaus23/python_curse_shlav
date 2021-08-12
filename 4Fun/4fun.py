@@ -1,14 +1,13 @@
+#!/usr/bin/python3
+
 """
 4fun.py
-
 Names: Ofir, Yuval, Noy, Adi, Noam, Amit, Maya
 Date: 11.08.2021
  
 This programs creates a website using flask module, people can upload questions
 and others can reply. The questions are inserted into a database.
-
 Example post representation in the database:
-
 {
   "title": "Based Post",
   "content": "allo",
@@ -16,8 +15,8 @@ Example post representation in the database:
     "based",
     "entrepreneur"
   ],
-  "upvotes": 0,
-  "downvotes": 0,
+  "likes": 0,
+  "dislikes": 0,
   "id": 123245123124,
   "parent": 85718975819651, // null if the post is a thread
   "image": null,
@@ -33,8 +32,8 @@ try:
     from werkzeug.utils import secure_filename
     from pathlib import Path
     from Pac.pac import parents_and_children
-except ImportError:
-    print("Please 'pip install' the specified module from the PyPi Server!")
+except ImportError or ModuleNotFoundError:
+    print("Please 'pip install' the specified module from the PyPi Server or check if the module can be found!")
 
 
 app = Flask(__name__)
@@ -46,7 +45,7 @@ upload_folder = Path(app.config["UPLOAD_FOLDER"])
 if not upload_folder.exists():
     try:
         upload_folder.mkdir(exist_ok=True)
-    except PermissionError:
+    except PermissionError or FileNotFoundError:
         print(f"Please create {upload_folder}")
         exit(1)
 
@@ -97,8 +96,8 @@ def new_post(**overrides):
         "title": req.form.get("title", None),
         "content": req.form["content"],
         "tags": [],
-        "upvotes": 0,
-        "downvotes": 0,
+        "likes": 0,
+        "dislikes": 0,
         "parent": None,
         "id": id_for_new_post(),
         "image": None,
@@ -133,6 +132,11 @@ def reply(post_id):
     # actual POST submission endpoint
     else:
         return new_post(content=req.form["content"], parent=int(req.form["parent"]))
+     
+@app.route("/like_or_dislike/<int:post_id>/<like_or_dislike>", methods=["POST"])
+def like_or_dislike(post_id, like_or_dislike):
+    posts.update( { "id": post_id }, { '$inc': { like_or_dislike: 1 }} )
+    return redirect("/")
 
 @app.route("/img/<img_path>")
 def img(img_path):
@@ -145,8 +149,12 @@ def img(img_path):
         print("cannot download the image!")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    try:
+        # run with http
+        #app.run(host='0.0.0.0')
     
-# run with https
-# mkdir ssl && openssl req -x509 -newkey rsa:4096 -nodes -out ssl/cert.pem -keyout ssl/key.pem -days 365 -subj "/C=US/ST=New York/L=New York/O=General Org/OU=Ou/CN=example.com"
-# app.run(host='0.0.0.0', port='443', ssl_context=('ssl/cert.pem', 'ssl/key.pem'))
+        # run with https
+        # mkdir ssl && openssl req -x509 -newkey rsa:4096 -nodes -out ssl/cert.pem -keyout ssl/key.pem -days 365 -subj "/C=US/ST=New York/L=New York/O=General Org/OU=Ou/CN=example.com"
+        app.run(host='0.0.0.0', port='443', ssl_context=('ssl/cert.pem', 'ssl/key.pem'))
+    except:
+        print("Please create the ssl components with the cmd above!")
