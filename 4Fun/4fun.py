@@ -36,7 +36,7 @@ try:
     from pathlib import Path
     from Pac.pac import parents_and_children
 except ImportError or ModuleNotFoundError:
-    print("Please 'pip install' the specified module from the PyPi Server!")
+    print("Please 'pip install' the specified module from the PyPi Server or check if the module can be found!")
 
 
 app = Flask(__name__)
