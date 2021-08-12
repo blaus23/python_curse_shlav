@@ -35,7 +35,7 @@ try:
     from werkzeug.utils import secure_filename
     from pathlib import Path
     from Pac.pac import parents_and_children
-except ImportError, ModuleNotFoundError:
+except ImportError or ModuleNotFoundError:
     print("Please 'pip install' the specified module from the PyPi Server!")
 
 
