@@ -135,6 +135,11 @@ def reply(post_id):
     # actual POST submission endpoint
     else:
         return new_post(content=req.form["content"], parent=int(req.form["parent"]))
+     
+@app.route("/like_or_dislike/<int:post_id>/<like_or_dislike>", methods=["POST"])
+def like_or_dislike(post_id, like_or_dislike):
+    posts.update( { "id": post_id }, { '$inc': { like_or_dislike: 1 }} )
+    return redirect("/")
 
 @app.route("/img/<img_path>")
 def img(img_path):
