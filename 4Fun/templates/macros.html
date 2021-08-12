@@ -19,47 +19,53 @@
     <div></div>
     {% endif %}
     {% if is_reply %}
+    <div style="position:relative;right:50px">
+    {% else %}
     <div>
-        {% else %}
+    {% endif %}
         <div>
+            {% if is_reply %}
+            <strong>×ª×’×•×‘×” ×œ{{ parent_title }}</strong>
+            {% else %}
+            <strong>{{ post["title"] }}</strong>
             {% endif %}
-            <div>
-                {% if is_reply %}
-                <strong>תגובה ל{{ parent_title }}</strong>
-                {% else %}
-                <strong>{{ post["title"] }}</strong>
-                {% endif %}
 
-                {% for tag in post["tags"] %}
-                <span>{{ tag }}</span>
-                {% endfor %}
-                <!-- tags -->
-                <!-- <span class="badge badge-pill badge-dark post-tag">אמת</span> -->
-                <button data-toggle="tooltip" data-placement="top" title="אהבתי"
-                    onclick={{post["like_count"]++}}><strong>👍</strong></button>
-                <button data-toggle="tooltip" data-placement="top" title="לא אהבתי" onclick={{post["like_count"]--}}><strong>👎</strong></button>
-                <div>{{post["like_count"]}}</div>
-                {% if not is_reply %}
-                <button data-toggle="tooltip" data-placement="top" title="תגובה">
-                    <a href="/reply/{{ post['id'] }}" style="text-decoration: none">
-                        <strong>💬</strong>
-                    </a>
-                </button>
-                {% endif %}
-                <div>ID: {{ post["id"] }}</div>
-                <div>
-                    {{ post["date"].strftime("%H:%M %d/%m/%y") }}
-                </div>
-            </div>
-            <div>
-                <p>{{ post["content"] }}</p>
-            </div>
-
-            {% if post["image"] %}
-            <a href="/img/{{ post['image'] }}">
-                <img src="/img/{{ post['image'] }}" />
-            </a>
+            {% for tag in post["tags"] %}
+                <span style="border:solid red;padding:3px;">{{ tag }}</span>
+            {% endfor %}
+            <!-- tags -->
+            <!-- <span class="badge badge-pill badge-dark post-tag">××ž×ª</span> -->
+            <form action="/like_or_dislike/{{ post['id'] }}/{{ 'likes' }}" method="post" style="display:inline;">
+	    <button type="submit" name="like_button" data-toggle="tooltip" data-placement="top" title="××”×‘×ª×™">
+		    <strong>ðŸ‘</strong>
+	    </button>
+	    </form>
+	    <form action="/like_or_dislike/{{ post['id'] }}/{{ 'dislikes' }}" method="post" style="display:inline;">
+            <button type="submit" name="dislike_button" data-toggle="tooltip" data-placement="top" title="×œ× ××”×‘×ª×™">
+	        <strong>ðŸ‘Ž</strong>
+	    </button>
+	    </form>
+            {% if not is_reply %}
+            <button data-toggle="tooltip" data-placement="top" title="×ª×’×•×‘×”">
+		<a href="/reply/{{ post['id'] }}" style="text-decoration: none">
+		    <strong>ðŸ’¬</strong>
+                </a>
+            </button>
             {% endif %}
+            <div>ID: {{ post["id"] }}</div>
+            <div>
+                {{ post["date"].strftime("%H:%M %d/%m/%y") }}
+            </div>
         </div>
+        <div>
+            <p>{{ post["content"] }}</p>
+        </div>
+
+        {% if post["image"] %}
+        <a href="/img/{{ post['image'] }}">
+            <img src="/img/{{ post['image'] }}"/>
+        </a>
+        {% endif %}
     </div>
-    {%- endmacro %}
+</div>
+{%- endmacro %}
